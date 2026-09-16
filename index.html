@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIDI+ 實驗方案</title>
+<meta name="description" content="國立屏東大學「AI Di+ 實驗方案」— 招募大學伴，以 AI 加成數位陪伴，帶領偏鄉小學伴一同學習成長。">
+<meta property="og:title" content="AIDI+ 實驗方案｜國立屏東大學">
+<meta property="og:description" content="AI 加成數位陪伴，屏東大學攜手大學伴，為偏鄉學童打造溫暖又創新的數位學習旅程。">
+<meta property="og:image" content="assets/logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/logo.png">
+
+<!-- Tailwind CDN (CSP-allowed) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            blue: '#2E9BF0',
+            blueDark: '#1D6FC2',
+            orange: '#F5A623',
+            orangeDark: '#E08A00',
+          }
+        },
+        fontFamily: {
+          heading: ['Fredoka', 'Noto Sans TC', 'sans-serif'],
+          body: ['Noto Sans TC', 'sans-serif'],
+        },
+        borderRadius: {
+          '4xl': '2rem',
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Fonts (CSP-allowed) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --brand-blue: #2E9BF0;
+  --brand-blue-dark: #1D6FC2;
+  --brand-orange: #F5A623;
+  --brand-orange-dark: #E08A00;
+  color-scheme: light;
+}
+body{ background:#ffffff; }
+
+/* ===== Layout building blocks ===== */
+.site-container {
+  width: 85%;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-eyebrow {
+  display: inline-block;
+  color: var(--brand-orange);
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 600;
+  font-size: 1.875rem;
+  color: #1e293b;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+@media (min-width: 640px) {
+  .section-title { font-size: 2.25rem; }
+}
+
+.nav-link {
+  color: #475569;
+  transition: color .2s ease;
+}
+.nav-link:hover { color: var(--brand-blue); }
+
+.mobile-link {
+  padding: 0.625rem 0.5rem;
+  border-radius: 0.5rem;
+  color: #334155;
+  transition: background-color .2s ease, color .2s ease;
+}
+.mobile-link:hover { background-color: #f0f9ff; color: var(--brand-blue); }
+
+#site-nav.scrolled {
+  background-color: rgba(255,255,255,.9);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+/* ===== Cards ===== */
+.vision-card, .model-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  border: 1px solid #f1f5f9;
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.vision-card:hover, .model-card:hover {
+  box-shadow: 0 20px 40px -12px rgba(46,155,240,.18);
+  transform: translateY(-6px);
+}
+.icon-badge {
+  width: 3.5rem; height: 3.5rem;
+  border-radius: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+}
+.vision-title {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+.vision-text {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.leader-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+  border: 1px solid #f1f5f9;
+  text-align: center;
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.leader-card:hover {
+  box-shadow: 0 20px 40px -12px rgba(46,155,240,.18);
+  transform: translateY(-6px);
+}
+.leader-name {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: #1e293b;
+}
+.leader-role {
+  color: var(--brand-orange);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0.375rem;
+  margin-bottom: 1.5rem;
+}
+.leader-list {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  text-align: left;
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.5;
+}
+.leader-list li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+.leader-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 0.4rem; height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--brand-blue);
+}
+.leader-card--sm {
+  padding: 1.75rem 1.5rem;
+  height: 100%;
+}
+.leader-card--sm .leader-name { font-size: 1.25rem; }
+.leader-card--sm .leader-role { font-size: 0.875rem; margin-bottom: 1.1rem; }
+.leader-card--sm .leader-list { font-size: 0.8125rem; gap: 0.5rem; }
+
+.team-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  border: 1px solid #f1f5f9;
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.team-card:hover {
+  box-shadow: 0 20px 40px -12px rgba(245,166,35,.18);
+  transform: translateY(-6px);
+}
+.avatar {
+  width: 5rem; height: 5rem;
+  margin: 0 auto 1rem;
+  border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  box-shadow: 0 8px 20px -6px rgba(0,0,0,.25);
+}
+.team-name {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #1e293b;
+}
+.team-role {
+  color: var(--brand-orange);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0.125rem 0 0.75rem;
+}
+.team-desc {
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.school-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  border: 1px solid #f1f5f9;
+  transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+}
+.school-card:hover {
+  box-shadow: 0 12px 28px -10px rgba(46,155,240,.2);
+  transform: translateY(-4px);
+  border-color: rgba(46,155,240,.3);
+}
+.school-icon {
+  width: 3.5rem; height: 3.5rem;
+  border-radius: 9999px;
+  background: #f0f9ff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.school-icon.text-brand-orange {
+  background: #fff3e0;
+}
+.school-card span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.stat-mini-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
+  border: 1px solid #f1f5f9;
+  transition: transform .3s ease;
+}
+.stat-mini-card:hover { transform: translateY(-6px); }
+
+.check-icon {
+  flex: none;
+  width: 1.5rem; height: 1.5rem;
+  border-radius: 9999px;
+  background: var(--brand-blue);
+  color: #fff;
+  font-size: 0.875rem;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  margin-top: 0.125rem;
+}
+
+.result-stat {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  border: 1px solid #f1f5f9;
+}
+.stat-number {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 2.25rem;
+  color: var(--brand-blue-dark);
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+.gallery-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2.5rem 1rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  border: 1.5px dashed #cbd5e1;
+  color: #94a3b8;
+  transition: border-color .3s ease, color .3s ease;
+}
+.gallery-card:hover { border-color: rgba(245,166,35,.5); color: var(--brand-orange); }
+
+.contact-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  border: 1px solid #f1f5f9;
+  display: flex; flex-direction: column; align-items: center;
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.contact-card:hover {
+  box-shadow: 0 16px 32px -12px rgba(46,155,240,.18);
+  transform: translateY(-4px);
+}
+
+/* ===== FAQ Accordion ===== */
+.faq-item {
+  background: #f8fafc;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+.faq-question {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  text-align: left;
+  padding: 1.25rem 1.5rem;
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 600;
+  color: #1e293b;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.faq-arrow {
+  flex: none;
+  width: 1.25rem; height: 1.25rem;
+  color: var(--brand-blue);
+  transition: transform .3s ease;
+}
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  padding: 0 1.5rem;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.7;
+  transition: grid-template-rows .3s ease, opacity .3s ease, padding-bottom .3s ease;
+}
+.faq-item.open .faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding-bottom: 1.25rem;
+}
+.faq-answer p { overflow: hidden; margin: 0; }
+
+/* ===== Section background washes ===== */
+.hero-bg { background: linear-gradient(180deg, #EAF5FF 0%, #FFFFFF 100%); }
+.recruit-bg { background: linear-gradient(135deg, #FFF7EA 0%, #FFFFFF 60%); }
+.contact-bg { background: linear-gradient(180deg, #FFFFFF 0%, #EAF5FF 100%); }
+
+/* ===== Decorative gradient blobs ===== */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: .4;
+  pointer-events: none;
+  filter: blur(64px);
+  animation: blob-float 14s ease-in-out infinite;
+}
+.blob-1 { top: -4rem; left: -4rem; width: 20rem; height: 20rem; background: #A7D8FF; }
+.blob-2 { bottom: -6rem; right: -3rem; width: 24rem; height: 24rem; background: #FFD9A0; animation-delay: -4s; }
+.blob-3 { top: 40%; left: 45%; width: 14rem; height: 14rem; background: #C9F0E0; animation-delay: -8s; }
+.blob-4 { top: -5rem; right: -5rem; width: 22rem; height: 22rem; background: #FFE1B0; }
+.blob-5 { bottom: -5rem; left: -5rem; width: 20rem; height: 20rem; background: #BFE3FF; }
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -25px) scale(1.08); }
+}
+
+/* ===== Hero floating illustration ===== */
+.float-anim { animation: float-y 5s ease-in-out infinite; }
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+/* ===== CTA pulse glow ===== */
+.pulse-cta { position: relative; }
+.pulse-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 0 rgba(245, 166, 35, .55);
+  animation: pulse-glow 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(245, 166, 35, .45); }
+  70% { box-shadow: 0 0 0 14px rgba(245, 166, 35, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); }
+}
+
+/* ===== Back to top ===== */
+#back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== Splash screen ===== */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 42%, #eaf5ff 0%, #ffffff 55%, #fff7ea 100%);
+  overflow: hidden;
+}
+.splash-screen.splash-hide {
+  animation: splash-fadeout .7s ease forwards;
+  pointer-events: none;
+}
+.splash-ring {
+  position: absolute;
+  width: 13rem; height: 13rem;
+  border-radius: 9999px;
+  border: 2px solid rgba(46,155,240,.35);
+  opacity: 0;
+}
+.splash-ring-1 { animation: splash-ring 1.8s ease-out infinite; }
+.splash-ring-2 { animation: splash-ring 1.8s ease-out .6s infinite; border-color: rgba(245,166,35,.35); }
+.splash-logo-wrap {
+  position: relative;
+  width: 8.5rem; height: 8.5rem;
+  border-radius: 9999px;
+  opacity: 0;
+  animation:
+    splash-logo-in .9s cubic-bezier(.22,.9,.3,1.2) .2s forwards,
+    splash-glow 2.2s ease-in-out 1.05s infinite;
+}
+.splash-logo {
+  width: 100%; height: 100%;
+  border-radius: 9999px;
+  object-fit: cover;
+  box-shadow: 0 10px 32px rgba(15,23,42,.18);
+}
+.splash-text {
+  margin-top: 1.75rem;
+  text-align: center;
+  opacity: 0;
+  animation: splash-text-in .6s ease 1.05s forwards;
+}
+.splash-title {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-weight: 700;
+  font-size: 1.875rem;
+  color: #1e293b;
+  letter-spacing: .02em;
+}
+.splash-plus { color: var(--brand-orange); }
+.splash-subtitle {
+  margin-top: .375rem;
+  font-size: .875rem;
+  color: #64748b;
+  letter-spacing: .02em;
+}
+@keyframes splash-ring {
+  0% { transform: scale(.6) rotate(0deg); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: scale(1.3) rotate(20deg); opacity: 0; }
+}
+@keyframes splash-logo-in {
+  0% { transform: scale(.45) rotate(-8deg); opacity: 0; }
+  70% { opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes splash-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(46,155,240,0); }
+  50% { box-shadow: 0 0 55px 16px rgba(46,155,240,.35); }
+}
+@keyframes splash-text-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes splash-fadeout {
+  to { opacity: 0; visibility: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-ring, .splash-logo-wrap, .splash-text, .splash-screen.splash-hide {
+    animation: none !important;
+    opacity: 1;
+  }
+}
+
+/* ===== Photo gallery ===== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.875rem;
+}
+@media (min-width: 640px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(5, 1fr); }
+}
+.gallery-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  padding: 0;
+  cursor: pointer;
+  background: #f1f5f9;
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.gallery-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+.gallery-thumb:hover { box-shadow: 0 16px 32px -12px rgba(46,155,240,.25); transform: translateY(-3px); }
+.gallery-thumb:hover img { transform: scale(1.06); }
+.gallery-thumb:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 2px; }
+
+/* ===== Lightbox ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, .92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-figure {
+  max-width: min(90vw, 1100px);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+.lightbox-figure img {
+  max-width: 100%;
+  max-height: 74vh;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.lightbox-caption {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.lightbox-counter { color: #94a3b8; font-variant-numeric: tabular-nums; }
+.lightbox-close, .lightbox-nav {
+  position: fixed;
+  border: none;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border-radius: 9999px;
+  width: 3rem; height: 3rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+.lightbox-close:hover, .lightbox-nav:hover { background: rgba(255,255,255,.22); }
+.lightbox-close { top: 1.25rem; right: 1.25rem; }
+.lightbox-nav { top: 50%; transform: translateY(-50%); }
+.lightbox-prev { left: 1.25rem; }
+.lightbox-next { right: 1.25rem; }
+@media (max-width: 640px) {
+  .lightbox-close { top: 0.75rem; right: 0.75rem; width: 2.5rem; height: 2.5rem; }
+  .lightbox-nav { width: 2.5rem; height: 2.5rem; }
+  .lightbox-prev { left: 0.5rem; }
+  .lightbox-next { right: 0.5rem; }
+}
+
+/* ===== Scroll-reveal (native replacement for AOS) ===== */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(.33,1,.68,1);
+  transition-duration: 700ms;
+  will-change: opacity, transform;
+}
+[data-aos="fade-up"] { transform: translateY(28px); }
+[data-aos="fade-right"] { transform: translateX(-28px); }
+[data-aos="fade-left"] { transform: translateX(28px); }
+[data-aos="zoom-in"] { transform: scale(.9); }
+[data-aos].aos-animate { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .blob, .float-anim, .pulse-cta::after {
+    animation: none !important;
+  }
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+</style>
+
+</head>
+<body>
+<div class="font-body text-slate-700 bg-white antialiased">
+
+<!-- ============ SPLASH SCREEN ============ -->
+<div id="splash-screen" class="splash-screen" role="presentation" aria-hidden="true">
+  <div class="splash-ring splash-ring-1"></div>
+  <div class="splash-ring splash-ring-2"></div>
+  <div class="splash-logo-wrap">
+    <img src="assets/logo.png" alt="" class="splash-logo">
+  </div>
+  <div class="splash-text">
+    <p class="splash-title">AIDI<span class="splash-plus">+</span></p>
+    <p class="splash-subtitle">國立屏東大學．AI Di+ 實驗方案</p>
+  </div>
+</div>
+<script>
+(function () {
+  var splash = document.getElementById('splash-screen');
+  if (!splash) return;
+  var seen = false;
+  try { seen = sessionStorage.getItem('aidiSplashSeen') === '1'; } catch (e) {}
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (seen || reduced) {
+    splash.remove();
+    return;
+  }
+  try { sessionStorage.setItem('aidiSplashSeen', '1'); } catch (e) {}
+  document.documentElement.style.overflow = 'hidden';
+  setTimeout(function () {
+    splash.classList.add('splash-hide');
+    document.documentElement.style.overflow = '';
+    setTimeout(function () { splash.remove(); }, 750);
+  }, 2600);
+})();
+</script>
+
+<!-- ============ NAV ============ -->
+<header id="site-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="site-container">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href="#top" class="flex items-center gap-2 shrink-0">
+        <img src="assets/logo.png" alt="AIDI+ Logo" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full object-cover shadow-md">
+        <span class="font-heading font-bold text-lg lg:text-xl text-brand-blueDark">AIDI<span class="text-brand-orange">+</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium">
+        <a href="#about" class="nav-link">計畫介紹</a>
+        <a href="#team" class="nav-link">團隊介紹</a>
+        <a href="#schools" class="nav-link">合作學校</a>
+        <a href="#recruit" class="nav-link">招募大學伴</a>
+        <a href="#model" class="nav-link">教學模式</a>
+        <a href="#results" class="nav-link">成果與經驗</a>
+        <a href="#faq" class="nav-link">常見問題</a>
+      </nav>
+
+      <a href="#recruit" class="hidden lg:inline-flex items-center gap-1 bg-brand-orange hover:bg-brand-orangeDark text-white font-heading font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-orange-200 transition pulse-cta">
+        立即加入大學伴
+      </a>
+
+      <button id="menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100" aria-label="開啟選單">
+        <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-brand-blueDark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-brand-blueDark hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile menu -->
+  <div id="mobile-menu" class="lg:hidden hidden bg-white/95 backdrop-blur border-t border-slate-100 shadow-xl">
+    <nav class="flex flex-col px-6 py-4 gap-1 text-base font-medium">
+      <a href="#about" class="mobile-link">計畫介紹</a>
+      <a href="#team" class="mobile-link">團隊介紹</a>
+      <a href="#schools" class="mobile-link">合作學校</a>
+      <a href="#recruit" class="mobile-link">招募大學伴</a>
+      <a href="#model" class="mobile-link">教學模式</a>
+      <a href="#results" class="mobile-link">成果與經驗</a>
+      <a href="#faq" class="mobile-link">常見問題</a>
+      <a href="#contact" class="mobile-link">聯絡我們</a>
+      <a href="#recruit" class="mt-2 text-center bg-brand-orange text-white font-heading font-semibold px-5 py-3 rounded-full">立即加入大學伴</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative pt-32 pb-24 lg:pt-44 lg:pb-32 overflow-hidden hero-bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="relative site-container grid lg:grid-cols-2 gap-12 items-center">
+    <div data-aos="fade-right" data-aos-duration="800">
+      <p class="inline-block bg-white/70 backdrop-blur text-brand-blueDark font-semibold text-sm px-4 py-1.5 rounded-full mb-5 shadow-sm">國立屏東大學．115–116 年教育部實驗方案</p>
+      <h1 class="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight text-slate-800">
+        <span class="text-brand-blueDark">AI</span> 加成陪伴<br>
+        點亮偏鄉學習的<span class="text-brand-orange">每一步</span>
+      </h1>
+      <p class="mt-6 text-lg text-slate-600 leading-relaxed max-w-xl">
+        AIDI+ 實驗方案結合生成式 AI 與因材網數位學習平臺，由屏東大學招募培訓「大學伴」，以一對四線上陪伴，攜手偏鄉國中小「小學伴」一起學習、一起成長——生命陪伴生命，生活教導生活。
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="#recruit" class="pulse-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark text-white font-heading font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-orange-200 transition">
+          我要加入大學伴
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+        <a href="#about" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-brand-blueDark font-heading font-semibold px-7 py-3.5 rounded-full shadow-md border border-slate-100 transition">
+          認識計畫
+        </a>
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-6 text-sm text-slate-500">
+        <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-blue"></span>屏東縣及鄰近縣市偏鄉國中小</div>
+        <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-orange"></span>3–9 年級小學伴</div>
+        <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-blue"></span>一對四線上陪伴</div>
+      </div>
+    </div>
+
+    <div class="relative flex justify-center" data-aos="fade-left" data-aos-duration="800">
+      <div class="float-anim">
+        <img src="assets/logo.png" alt="AIDI+ 計畫識別圖像" class="w-72 sm:w-96 lg:w-[26rem] rounded-full shadow-2xl ring-8 ring-white">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="py-16 sm:py-20 lg:py-24 bg-white">
+  <div class="site-container">
+    <div class="text-center max-w-2xl mx-auto" data-aos="fade-up">
+      <p class="section-eyebrow">計畫介紹</p>
+      <h2 class="section-title">用 AI，把陪伴送到偏鄉的每一個角落</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">
+        國立屏東大學長期深耕師資培育與偏鄉教育，自 106 年起執行「數位學伴」計畫、112 年起推動「雙語數位學伴」計畫。承接過去經驗，本校投入「AI Di+ 實驗方案」，整合生成式 AI 與因材網數位學習平臺，培訓大學伴以線上視訊陪伴偏鄉學童，提升學科能力、數位素養與自主學習力，落實「生命陪伴生命，生活教導生活」的核心精神。
+      </p>
+    </div>
+
+    <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+      <!-- 5 vision cards -->
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+        </div>
+        <h3 class="vision-title">弱勢關懷</h3>
+        <p class="vision-text">跨越交通與資源限制，用線上陪伴讓偏鄉學習不受時空限制。</p>
+      </div>
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon-badge bg-orange-50 text-brand-orange">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg>
+        </div>
+        <h3 class="vision-title">以學生需求為主體</h3>
+        <p class="vision-text">結合因材網與 AI 學習夥伴，引導小學伴正確運用資訊解決學習問題。</p>
+      </div>
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="150">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+        </div>
+        <h3 class="vision-title">推動社會支持網絡</h3>
+        <p class="vision-text">串連大學、家庭與學校，打造能即時回應小學伴需求的支持系統。</p>
+      </div>
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="icon-badge bg-orange-50 text-brand-orange">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg>
+        </div>
+        <h3 class="vision-title">激發大學生教育熱誠</h3>
+        <p class="vision-text">陪伴歷程也是自我探索，點燃投身教育的熱情與職涯方向。</p>
+      </div>
+      <div class="vision-card" data-aos="fade-up" data-aos-delay="250">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.933 1.933a3.001 3.001 0 01-.622 4.72"/></svg>
+        </div>
+        <h3 class="vision-title">建構教育夥伴關係</h3>
+        <p class="vision-text">深化大學－地方政府－國中小（UGS）長期穩定的教育夥伴關係。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section id="team" class="py-16 sm:py-20 lg:py-24 bg-sky-50/60">
+  <div class="site-container">
+    <div class="text-center max-w-2xl mx-auto" data-aos="fade-up">
+      <p class="section-eyebrow">團隊介紹</p>
+      <h2 class="section-title">教育經驗與 AI 專業並重的執行團隊</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">由師資培育中心與 AI 數位轉型研究中心共同主責，結合多年偏鄉教育與雙語數位學伴的實戰經驗。</p>
+    </div>
+
+    <!-- 區塊1：計畫主持人 -->
+    <div class="mt-14">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-blueDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>計畫主持人
+      </h3>
+      <div class="flex justify-center">
+        <div class="leader-card w-full max-w-md" data-aos="fade-up" data-aos-delay="0">
+          <h3 class="leader-name">林青穎</h3>
+          <p class="leader-role">計畫主持人</p>
+          <ul class="leader-list">
+            <li>應用英語學系助理教授</li>
+            <li>AI 數位轉型研究中心副執行長</li>
+            <li>美國德州農工大學雙語教育博士</li>
+            <li>曾任屏東大學雙語學伴計畫主持人 4 年</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 區塊2：計畫助理、Di+課程總督導 -->
+    <div class="mt-14">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-orangeDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>計畫助理．Di+ 課程總督導
+      </h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="leader-card leader-card--sm" data-aos="fade-up" data-aos-delay="0">
+          <h3 class="leader-name">楊承安</h3>
+          <p class="leader-role">計畫助理</p>
+          <ul class="leader-list">
+            <li>AI 數位轉型研究中心專案助理</li>
+            <li>國立屏東大學資訊工程學系碩士</li>
+          </ul>
+        </div>
+        <div class="leader-card leader-card--sm" data-aos="fade-up" data-aos-delay="80">
+          <h3 class="leader-name">鍾文郁</h3>
+          <p class="leader-role">Di+ 課程總督導</p>
+          <ul class="leader-list">
+            <li>屏東縣鶴聲國小退休校長</li>
+            <li>數位學伴計畫帶班顧問（8 年）</li>
+          </ul>
+        </div>
+        <div class="leader-card leader-card--sm" data-aos="fade-up" data-aos-delay="160">
+          <h3 class="leader-name">朱若葶</h3>
+          <p class="leader-role">Di+ 課程總督導</p>
+          <ul class="leader-list">
+            <li>屏東縣歸來國小英文教師兼總務主任</li>
+            <li>國立屏東大學應用英語所碩士</li>
+            <li>雙語學伴計畫英語指導老師（4 年）</li>
+          </ul>
+        </div>
+        <div class="leader-card leader-card--sm" data-aos="fade-up" data-aos-delay="240">
+          <h3 class="leader-name">戚居清</h3>
+          <p class="leader-role">Di+ 課程總督導</p>
+          <ul class="leader-list">
+            <li>高雄市前鎮區樂群國小英語教師兼組長</li>
+            <li>國立中山大學教育研究所博士</li>
+            <li>雙語學伴計畫英語指導老師（4 年）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 區塊3：課程督導 -->
+    <div class="mt-14">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-blueDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>課程督導
+      </h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="team-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="avatar bg-gradient-to-br from-brand-blue to-brand-blueDark">王</div>
+          <h3 class="team-name">王柏閔</h3>
+          <p class="team-role">課程督導</p>
+        </div>
+        <div class="team-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="avatar bg-gradient-to-br from-brand-orange to-brand-orangeDark">唐</div>
+          <h3 class="team-name">唐宇瑄</h3>
+          <p class="team-role">課程督導</p>
+        </div>
+        <div class="team-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="avatar bg-gradient-to-br from-brand-blue to-brand-blueDark">李</div>
+          <h3 class="team-name">李品諺</h3>
+          <p class="team-role">課程督導</p>
+        </div>
+        <div class="team-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="avatar bg-gradient-to-br from-brand-orange to-brand-orangeDark">吳</div>
+          <h3 class="team-name">吳沛連</h3>
+          <p class="team-role">課程督導</p>
+        </div>
+      </div>
+      <p class="mt-3 text-center text-xs text-slate-400">＊簡介籌備中，將於資料確認後補上。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHOOLS ============ -->
+<section id="schools" class="py-16 sm:py-20 lg:py-24 bg-white">
+  <div class="site-container">
+    <div class="text-center max-w-2xl mx-auto" data-aos="fade-up">
+      <p class="section-eyebrow">合作學習端</p>
+      <h2 class="section-title">攜手屏東縣及鄰近縣市偏鄉國中小</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">預計服務 120～150 名 3–9 年級小學伴，優先服務屏東縣，並視計畫規模擴及高雄市等鄰近縣市。</p>
+    </div>
+
+    <div class="mt-14">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-blueDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>屏東縣
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <!-- Pingtung schools -->
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="0">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>獅子國中</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="30">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>牡丹國中</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="60">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>丹路國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="90">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>北葉國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="120">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>枋寮國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="150">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>僑勇國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="180">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>恆春國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="210">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>滿州國中</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="240">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>地磨兒國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="270">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>長興國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>前進國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="330">
+          <div class="school-icon text-brand-blue"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>潮州國小</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-orangeDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>高雄市
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="0">
+          <div class="school-icon text-brand-orange"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>美濃國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="30">
+          <div class="school-icon text-brand-orange"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>樂群國小</span>
+        </div>
+        <div class="school-card" data-aos="zoom-in" data-aos-delay="60">
+          <div class="school-icon text-brand-orange"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347M4.26 10.147l7.44-4.415a1 1 0 011 0l7.44 4.415M4.26 10.147L12 14.5l7.74-4.353"/></svg></div><span>愛群國小</span>
+        </div>
+      </div>
+    </div>
+    <!-- 學校 LOGO 待各校提供後替換上方 icon -->
+  </div>
+</section>
+
+<!-- ============ RECRUIT ============ -->
+<section id="recruit" class="py-16 sm:py-20 lg:py-24 recruit-bg relative overflow-hidden">
+  <div class="blob blob-4"></div>
+  <div class="relative site-container grid lg:grid-cols-2 gap-14 items-center">
+    <div data-aos="fade-right">
+      <p class="section-eyebrow">招募大學伴</p>
+      <h2 class="section-title">成為大學伴，一起陪伴一個孩子的成長</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">
+        不限系所，只要你願意花時間陪伴、樂於學習運用 AI 工具，就有機會成為孩子生命中的重要夥伴。加入後將接受完整培訓，運用因材網與生成式 AI，以一對四線上教學陪伴偏鄉小學伴。
+      </p>
+
+      <ul class="mt-8 space-y-4">
+        <li class="flex items-start gap-3">
+          <span class="check-icon">✓</span>
+          <span>每學期 12 小時、兩學期共 24 小時完整教育訓練，涵蓋 AI 工具應用、教學方法與輔導知能。</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="check-icon">✓</span>
+          <span>Di+ 課程督導全程陪跑，教學共備、線上觀課、即時給予建議。</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="check-icon">✓</span>
+          <span>累積服務學習時數與教學實作經驗，是師資生職前歷練的最佳舞台。</span>
+        </li>
+      </ul>
+
+      <div class="mt-9 flex flex-wrap gap-4">
+        <!-- TODO: 報名連結待補 Google 表單網址 -->
+        <a href="#" target="_blank" rel="noopener" class="pulse-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark text-white font-heading font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-orange-200 transition">
+          前往報名表單
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-brand-blueDark font-heading font-semibold px-7 py-3.5 rounded-full shadow-md border border-slate-100 transition">
+          有問題想先詢問
+        </a>
+      </div>
+      <p class="mt-3 text-xs text-slate-400">＊報名表單連結籌備中，正式開放後將更新於此按鈕。</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-5 items-stretch" data-aos="fade-left">
+      <div class="stat-mini-card flex flex-col justify-center">
+        <div class="text-4xl">🤝</div>
+        <p class="mt-3 font-heading font-semibold text-slate-700">一對四陪伴</p>
+        <p class="text-sm text-slate-500 mt-1">線上小班陪伴，關係更緊密</p>
+      </div>
+      <div class="stat-mini-card flex flex-col justify-center">
+        <div class="text-4xl">🎓</div>
+        <p class="mt-3 font-heading font-semibold text-slate-700">24 小時培訓</p>
+        <p class="text-sm text-slate-500 mt-1">完整教育訓練，安心上路</p>
+      </div>
+      <div class="stat-mini-card flex flex-col justify-center">
+        <div class="text-4xl">🤖</div>
+        <p class="mt-3 font-heading font-semibold text-slate-700">AI 工具實作</p>
+        <p class="text-sm text-slate-500 mt-1">生成式 AI × 因材網教學</p>
+      </div>
+      <div class="stat-mini-card flex flex-col justify-center">
+        <div class="text-4xl">🌱</div>
+        <p class="mt-3 font-heading font-semibold text-slate-700">服務學習</p>
+        <p class="text-sm text-slate-500 mt-1">累積時數與教學實務經驗</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEACHING MODEL ============ -->
+<section id="model" class="py-16 sm:py-20 lg:py-24 bg-white">
+  <div class="site-container">
+    <div class="text-center max-w-2xl mx-auto" data-aos="fade-up">
+      <p class="section-eyebrow">教學模式</p>
+      <h2 class="section-title">科技加溫，讓陪伴更有方法</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">告別傳統講述式教學，透過工具與方法的結合，引導小學伴主動探究、自主學習。</p>
+    </div>
+
+    <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="model-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+        </div>
+        <h3 class="vision-title">因材網數位平臺</h3>
+        <p class="vision-text">運用知識節點星空圖進行學習診斷，精準掌握小學伴的學習斷點。</p>
+      </div>
+      <div class="model-card" data-aos="fade-up" data-aos-delay="90">
+        <div class="icon-badge bg-orange-50 text-brand-orange">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+        </div>
+        <h3 class="vision-title">AI 學習夥伴</h3>
+        <p class="vision-text">結合生成式 AI 輔助備課與個人化學習建議，陪伴更精準有效率。</p>
+      </div>
+      <div class="model-card" data-aos="fade-up" data-aos-delay="180">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="vision-title">PBL 探究教學</h3>
+        <p class="vision-text">從講述走向探究，引導小學伴透過問題解決建立自主學習力。</p>
+      </div>
+      <div class="model-card" data-aos="fade-up" data-aos-delay="270">
+        <div class="icon-badge bg-orange-50 text-brand-orange">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        </div>
+        <h3 class="vision-title">一對四線上陪伴</h3>
+        <p class="vision-text">以視訊小班制建立信任關係，關注每位小學伴的學習節奏。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS / GALLERY ============ -->
+<section id="results" class="py-16 sm:py-20 lg:py-24 bg-sky-50/60">
+  <div class="site-container">
+    <div class="text-center max-w-2xl mx-auto" data-aos="fade-up">
+      <p class="section-eyebrow">成果與執行經驗</p>
+      <h2 class="section-title">累積多年偏鄉數位陪伴能量</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">本校自 106 年起執行數位學伴計畫、112 年起推動雙語數位學伴計畫，服務屏東縣及鄰近縣市多所國民中小學，深獲學習端學校、家長及學生肯定。</p>
+    </div>
+
+    <!-- 教學花絮 -->
+    <div class="mt-14">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-blueDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>教學花絮
+      </h3>
+      <div class="gallery-grid" data-group="highlights">
+        <button class="gallery-thumb" data-group="highlights" data-index="0" data-aos="zoom-in" data-aos-delay="0"><img src="assets/gallery/thumb/highlight-01.jpg" alt="教學紀錄" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="1" data-aos="zoom-in" data-aos-delay="20"><img src="assets/gallery/thumb/highlight-02.jpg" alt="教學紀錄" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="2" data-aos="zoom-in" data-aos-delay="40"><img src="assets/gallery/thumb/highlight-03.jpg" alt="AI 教案及課程規劃實務工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="3" data-aos="zoom-in" data-aos-delay="60"><img src="assets/gallery/thumb/highlight-04.jpg" alt="AI 教案及課程規劃實務工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="4" data-aos="zoom-in" data-aos-delay="80"><img src="assets/gallery/thumb/highlight-05.jpg" alt="科技輔助自主學習工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="5" data-aos="zoom-in" data-aos-delay="100"><img src="assets/gallery/thumb/highlight-06.jpg" alt="科技輔助自主學習工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="6" data-aos="zoom-in" data-aos-delay="120"><img src="assets/gallery/thumb/highlight-07.jpg" alt="科技輔助自主學習工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="7" data-aos="zoom-in" data-aos-delay="140"><img src="assets/gallery/thumb/highlight-08.jpg" alt="生成式 AI 融入學科領域教學工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="8" data-aos="zoom-in" data-aos-delay="160"><img src="assets/gallery/thumb/highlight-09.jpg" alt="生成式 AI 融入學科領域教學工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="9" data-aos="zoom-in" data-aos-delay="180"><img src="assets/gallery/thumb/highlight-10.jpg" alt="生成式 AI 融入學科領域教學工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="10" data-aos="zoom-in" data-aos-delay="200"><img src="assets/gallery/thumb/highlight-11.jpg" alt="生成式 AI 融入學科領域教學工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="11" data-aos="zoom-in" data-aos-delay="220"><img src="assets/gallery/thumb/highlight-12.jpg" alt="生成式 AI 融入學科領域教學工作坊" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="highlights" data-index="12" data-aos="zoom-in" data-aos-delay="240"><img src="assets/gallery/thumb/highlight-13.jpg" alt="生成式 AI 融入學科領域教學工作坊" loading="lazy"></button>
+      </div>
+    </div>
+
+    <!-- 相見歡活動 -->
+    <div class="mt-14">
+      <h3 class="flex items-center gap-2 font-heading font-semibold text-xl text-brand-orangeDark mb-6" data-aos="fade-up">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>相見歡活動
+      </h3>
+      <div class="gallery-grid" data-group="meetgreet">
+        <button class="gallery-thumb" data-group="meetgreet" data-index="0" data-aos="zoom-in" data-aos-delay="0"><img src="assets/gallery/thumb/meetgreet-01.jpg" alt="長興國小相見歡" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="meetgreet" data-index="1" data-aos="zoom-in" data-aos-delay="20"><img src="assets/gallery/thumb/meetgreet-02.jpg" alt="長興國小相見歡" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="meetgreet" data-index="2" data-aos="zoom-in" data-aos-delay="40"><img src="assets/gallery/thumb/meetgreet-03.jpg" alt="前進國小相見歡" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="meetgreet" data-index="3" data-aos="zoom-in" data-aos-delay="60"><img src="assets/gallery/thumb/meetgreet-04.jpg" alt="前進國小相見歡" loading="lazy"></button>
+        <button class="gallery-thumb" data-group="meetgreet" data-index="4" data-aos="zoom-in" data-aos-delay="80"><img src="assets/gallery/thumb/meetgreet-05.jpg" alt="前進國小相見歡" loading="lazy"></button>
+      </div>
+    </div>
+    <p class="mt-4 text-center text-xs text-slate-400">＊點擊照片可放大瀏覽，更多花絮將陸續更新於此區塊。</p>
+  </div>
+</section>
+
+<!-- ============ LIGHTBOX ============ -->
+<div id="lightbox" class="lightbox" hidden>
+  <button id="lightbox-close" class="lightbox-close" aria-label="關閉">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <button id="lightbox-prev" class="lightbox-nav lightbox-prev" aria-label="上一張">
+    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+  <figure class="lightbox-figure">
+    <img id="lightbox-img" src="" alt="">
+    <figcaption class="lightbox-caption">
+      <span id="lightbox-caption-text"></span>
+      <span id="lightbox-counter" class="lightbox-counter"></span>
+    </figcaption>
+  </figure>
+  <button id="lightbox-next" class="lightbox-nav lightbox-next" aria-label="下一張">
+    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="py-16 sm:py-20 lg:py-24 bg-white">
+  <div class="max-w-3xl mx-auto px-5 lg:px-8">
+    <div class="text-center" data-aos="fade-up">
+      <p class="section-eyebrow">常見問題</p>
+      <h2 class="section-title">關於 AIDI+，你可能想知道</h2>
+    </div>
+
+    <div class="mt-12 space-y-4" id="faq-list">
+      <div class="faq-item" data-aos="fade-up">
+        <button class="faq-question">
+          什麼是 AI Di+ 實驗方案？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>由教育部推動、屏東大學執行的偏鄉數位陪伴計畫，結合生成式 AI 與因材網數位學習平臺，招募大學伴以一對四線上陪伴偏鄉國中小學童，提升學科能力與數位／AI 素養。</p>
+        </div>
+      </div>
+      <div class="faq-item" data-aos="fade-up">
+        <button class="faq-question">
+          誰可以報名成為大學伴？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>不限科系，凡對教育有熱忱、願意投入陪伴的屏東大學在學學生皆歡迎報名，經審核與遴選後將安排完整培訓。</p>
+        </div>
+      </div>
+      <div class="faq-item" data-aos="fade-up">
+        <button class="faq-question">
+          陪伴的上課時間與方式為何？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>採線上視訊、一對四小班陪伴，每學期約 10 週、每週 2 次、每次 1.5 小時，實際時間依大學伴與學習端排課而定。</p>
+        </div>
+      </div>
+      <div class="faq-item" data-aos="fade-up">
+        <button class="faq-question">
+          成為大學伴需要接受哪些培訓？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>每學期 12 小時、兩學期共 24 小時教育訓練，內容涵蓋計畫精神、數位學習平臺操作、AI 工具應用、教學方法與輔導知能。</p>
+        </div>
+      </div>
+      <div class="faq-item" data-aos="fade-up">
+        <button class="faq-question">
+          我們學校想申請成為合作學習端，該怎麼做？
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>歡迎透過下方聯絡我們窗口與計畫團隊聯繫，我們將說明合作方式與所需準備事項。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="py-16 sm:py-20 lg:py-24 contact-bg relative overflow-hidden">
+  <div class="blob blob-5"></div>
+  <div class="relative max-w-4xl mx-auto px-5 lg:px-8 text-center" data-aos="fade-up">
+    <p class="section-eyebrow">聯絡我們</p>
+    <h2 class="section-title">想了解更多，歡迎與我們聯繫</h2>
+    <p class="mt-5 text-slate-600 leading-relaxed max-w-xl mx-auto">不論是想加入大學伴、申請合作學習端，或單純想了解計畫，都歡迎與我們聯絡。</p>
+
+    <div class="mt-10 grid sm:grid-cols-3 gap-5 text-left">
+      <a href="mailto:anselm14409@nptu.edu.tw" class="contact-card">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </div>
+        <p class="font-heading font-semibold mt-3">Email</p>
+        <p class="text-sm text-slate-500 mt-1 break-all">anselm14409@nptu.edu.tw</p>
+      </a>
+      <div class="contact-card">
+        <div class="icon-badge bg-orange-50 text-brand-orange">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a1.5 1.5 0 001.5-1.5v-3.379a1.5 1.5 0 00-1.06-1.435l-4.417-1.326a1.5 1.5 0 00-1.529.39l-1.548 1.547a11.037 11.037 0 01-6.105-6.105l1.547-1.548a1.5 1.5 0 00.389-1.529L7.964 3.32a1.5 1.5 0 00-1.435-1.06H3.75a1.5 1.5 0 00-1.5 1.5v2.99z"/></svg>
+        </div>
+        <p class="font-heading font-semibold mt-3">電話</p>
+        <p class="text-sm text-slate-500 mt-1">(08)766-3800 #14409</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon-badge bg-blue-50 text-brand-blue">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+        </div>
+        <p class="font-heading font-semibold mt-3">地址</p>
+        <p class="text-sm text-slate-500 mt-1">屏東縣屏東市民生路 4-18 號</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate-800 text-slate-300 py-12">
+  <div class="site-container flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <img src="assets/logo.png" alt="AIDI+ Logo" class="w-10 h-10 rounded-full object-cover">
+      <div>
+        <p class="font-heading font-semibold text-white">AIDI+ 實驗方案</p>
+        <p class="text-xs text-slate-400">國立屏東大學 AI數位轉型研究中心</p>
+      </div>
+    </div>
+    <p class="text-xs text-slate-400 text-center sm:text-right">© 2026 National Pingtung University. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="back-to-top" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-brand-blue text-white shadow-xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+</button>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Native scroll-reveal (replaces AOS, avoids unpkg CDN dependency)
+  const revealEls = document.querySelectorAll('[data-aos]');
+  revealEls.forEach(el => {
+    const delay = el.getAttribute('data-aos-delay');
+    const duration = el.getAttribute('data-aos-duration');
+    if (delay) el.style.transitionDelay = `${delay}ms`;
+    if (duration) el.style.transitionDuration = `${duration}ms`;
+  });
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('aos-animate');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('aos-animate'));
+  }
+
+  // Sticky nav background on scroll
+  const nav = document.getElementById('site-nav');
+  const backToTop = document.getElementById('back-to-top');
+  const onScroll = () => {
+    const scrolled = window.scrollY > 40;
+    nav.classList.toggle('scrolled', scrolled);
+    backToTop.classList.toggle('show', window.scrollY > 500);
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+  menuBtn.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.toggle('hidden');
+    iconOpen.classList.toggle('hidden', !isHidden);
+    iconClose.classList.toggle('hidden', isHidden);
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    });
+  });
+
+  // Active nav link highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const highlightNav = () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.offsetTop - 120;
+      if (window.scrollY >= top) current = section.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('text-brand-blue', link.getAttribute('href') === `#${current}`);
+    });
+  };
+  document.addEventListener('scroll', highlightNav, { passive: true });
+  highlightNav();
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(open => open.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Stat counters (skip placeholders with data-target="0" until real data is provided)
+  const counters = document.querySelectorAll('.stat-number[data-target]');
+  const animateCounter = (el) => {
+    const target = parseInt(el.dataset.target, 10);
+    if (!target) return; // leave "--" placeholder as-is
+    let current = 0;
+    const step = Math.max(1, Math.ceil(target / 60));
+    const tick = () => {
+      current = Math.min(target, current + step);
+      el.textContent = current.toLocaleString();
+      if (current < target) requestAnimationFrame(tick);
+    };
+    tick();
+  };
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  // ===== Photo gallery lightbox =====
+  const galleryData = {
+    highlights: [
+      { full: 'assets/gallery/full/highlight-01.jpg', caption: '教學紀錄' },
+      { full: 'assets/gallery/full/highlight-02.jpg', caption: '教學紀錄' },
+      { full: 'assets/gallery/full/highlight-03.jpg', caption: 'AI 教案及課程規劃實務工作坊' },
+      { full: 'assets/gallery/full/highlight-04.jpg', caption: 'AI 教案及課程規劃實務工作坊' },
+      { full: 'assets/gallery/full/highlight-05.jpg', caption: '科技輔助自主學習工作坊' },
+      { full: 'assets/gallery/full/highlight-06.jpg', caption: '科技輔助自主學習工作坊' },
+      { full: 'assets/gallery/full/highlight-07.jpg', caption: '科技輔助自主學習工作坊' },
+      { full: 'assets/gallery/full/highlight-08.jpg', caption: '生成式 AI 融入學科領域教學工作坊' },
+      { full: 'assets/gallery/full/highlight-09.jpg', caption: '生成式 AI 融入學科領域教學工作坊' },
+      { full: 'assets/gallery/full/highlight-10.jpg', caption: '生成式 AI 融入學科領域教學工作坊' },
+      { full: 'assets/gallery/full/highlight-11.jpg', caption: '生成式 AI 融入學科領域教學工作坊' },
+      { full: 'assets/gallery/full/highlight-12.jpg', caption: '生成式 AI 融入學科領域教學工作坊' },
+      { full: 'assets/gallery/full/highlight-13.jpg', caption: '生成式 AI 融入學科領域教學工作坊' },
+    ],
+    meetgreet: [
+      { full: 'assets/gallery/full/meetgreet-01.jpg', caption: '長興國小相見歡' },
+      { full: 'assets/gallery/full/meetgreet-02.jpg', caption: '長興國小相見歡' },
+      { full: 'assets/gallery/full/meetgreet-03.jpg', caption: '前進國小相見歡' },
+      { full: 'assets/gallery/full/meetgreet-04.jpg', caption: '前進國小相見歡' },
+      { full: 'assets/gallery/full/meetgreet-05.jpg', caption: '前進國小相見歡' },
+    ],
+  };
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaptionText = document.getElementById('lightbox-caption-text');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  const btnClose = document.getElementById('lightbox-close');
+  const btnPrev = document.getElementById('lightbox-prev');
+  const btnNext = document.getElementById('lightbox-next');
+  let currentGroup = null;
+  let currentIndex = 0;
+
+  const renderLightbox = () => {
+    const items = galleryData[currentGroup];
+    const item = items[currentIndex];
+    lightboxImg.src = item.full;
+    lightboxImg.alt = item.caption;
+    lightboxCaptionText.textContent = item.caption;
+    lightboxCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+  };
+
+  const openLightbox = (group, index) => {
+    currentGroup = group;
+    currentIndex = index;
+    renderLightbox();
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    btnClose.focus();
+  };
+
+  const closeLightbox = () => {
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+    currentGroup = null;
+  };
+
+  const step = (delta) => {
+    if (!currentGroup) return;
+    const items = galleryData[currentGroup];
+    currentIndex = (currentIndex + delta + items.length) % items.length;
+    renderLightbox();
+  };
+
+  document.querySelectorAll('.gallery-thumb').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openLightbox(btn.dataset.group, parseInt(btn.dataset.index, 10));
+    });
+  });
+
+  btnClose.addEventListener('click', closeLightbox);
+  btnPrev.addEventListener('click', () => step(-1));
+  btnNext.addEventListener('click', () => step(1));
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+});
+</script>
+</body>
+</html>
