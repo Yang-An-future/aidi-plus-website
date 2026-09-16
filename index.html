@@ -518,20 +518,28 @@ body{ background:#ffffff; }
   }
 }
 
-/* ===== Photo gallery ===== */
+/* ===== Photo gallery (drag-to-scroll carousel) ===== */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: 0.875rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  cursor: grab;
+  padding: 0.25rem 0.25rem 0.75rem;
+  margin: -0.25rem -0.25rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  user-select: none;
 }
-@media (min-width: 640px) {
-  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (min-width: 1024px) {
-  .gallery-grid { grid-template-columns: repeat(5, 1fr); }
-}
+.gallery-grid::-webkit-scrollbar { display: none; }
+.gallery-grid.dragging { cursor: grabbing; scroll-snap-type: none; }
 .gallery-thumb {
   position: relative;
+  flex: 0 0 auto;
+  width: 62vw;
   aspect-ratio: 4 / 3;
   border-radius: 1rem;
   overflow: hidden;
@@ -540,12 +548,20 @@ body{ background:#ffffff; }
   padding: 0;
   cursor: pointer;
   background: #f1f5f9;
+  scroll-snap-align: start;
   transition: box-shadow .3s ease, transform .3s ease;
+}
+@media (min-width: 640px) {
+  .gallery-thumb { width: 260px; }
+}
+@media (min-width: 1024px) {
+  .gallery-thumb { width: 280px; }
 }
 .gallery-thumb img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+  pointer-events: none;
   transition: transform .4s ease;
 }
 .gallery-thumb:hover { box-shadow: 0 16px 32px -12px rgba(46,155,240,.25); transform: translateY(-3px); }
@@ -637,9 +653,9 @@ body{ background:#ffffff; }
   }
 }
 </style>
-
 </head>
 <body>
+
 <div class="font-body text-slate-700 bg-white antialiased">
 
 <!-- ============ SPLASH SCREEN ============ -->
@@ -1458,6 +1474,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Drag-to-scroll for the photo carousels (mouse only — touch/trackpad already scroll natively)
+  document.querySelectorAll('.gallery-grid').forEach(track => {
+    let dragging = false;
+    let moved = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      dragging = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.classList.add('dragging');
+      track.setPointerCapture(e.pointerId);
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startScroll - dx;
+    });
+
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      track.classList.remove('dragging');
+    };
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointerleave', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    // Suppress the click that follows a drag so it doesn't also open the lightbox
+    track.addEventListener('click', (e) => {
+      if (moved) {
+        e.preventDefault();
+        e.stopPropagation();
+        moved = false;
+      }
+    }, true);
+  });
+
   btnClose.addEventListener('click', closeLightbox);
   btnPrev.addEventListener('click', () => step(-1));
   btnNext.addEventListener('click', () => step(1));
@@ -1472,5 +1531,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
 </body>
 </html>
